@@ -10,6 +10,11 @@ app.set('view engine', 'handlebars');
 
 app.use(express.static(`${__dirname}/public`));
 
+app.use((req, res, next) => {
+    res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
+    next();
+})
+
 app.set('port', process.env.PORT || 3000);
 
 app.get('/', (req, res) => {
